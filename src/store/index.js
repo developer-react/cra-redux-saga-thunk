@@ -22,12 +22,12 @@ const todoReducer = (state = INITIAL_STATE, action) => {
 
   switch (type) {
     case 'TODO_ADD':
-        return { ...state, tasksArray: [...tasksArray, payload] }
+      return { ...state, tasksArray: [...tasksArray, payload] }
       break;
   
     case 'TODO_REMOVE':
-        return { ...state, tasksArray: tasksArray.filter(item => item !== payload) }
-        break;
+      return { ...state, tasksArray: tasksArray.filter(item => item !== payload) }
+      break;
     default:
       return state;
   }
