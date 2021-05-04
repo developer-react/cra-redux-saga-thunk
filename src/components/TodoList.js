@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { actions, store } from  '../store'
+
 import './TodoList.css'
 
 class TodoList extends Component {
@@ -7,7 +9,15 @@ class TodoList extends Component {
     task: '',
     tasksArray: []
   }
-  
+
+  componentDidMount() {
+    store.subscribe(() => {
+      this.setState({
+        tasksArray: store.getState().todoReducer.tasksArray
+      })
+    })
+  }
+
   render() {
     const { task, tasksArray } = this.state
 
@@ -43,22 +53,15 @@ class TodoList extends Component {
 
   handleChange = event => this.setState({ task: event.target.value })
 
-  handleRemove = (task) => {
-    // console.log('Removing...s', task)
-    const filteredItems = this.state.tasksArray.filter(item => item !== task)
-    this.setState({ tasksArray: filteredItems  })
-  }
+  handleRemove = (task) => { store.dispatch(actions.remove(task))}
 
   handleSubmit = event => {
     event.preventDefault()
-
+    if (this.state.task === '') {
+      return
+    }
     let id =  '_' + Math.random().toString(36).substr(2, 9);
-    this.state.tasksArray.push({ id: id, task:  this.state.task })
-
-    // window.setTimeout(() => {
-    //   console.log('event....',  JSON.stringify( this.state.tasksArray, false, 2))
-    // }, 500)
-
+    store.dispatch(actions.add({ id: id, task:  this.state.task }))
     this.setState({ task: '' })
   }
 }
