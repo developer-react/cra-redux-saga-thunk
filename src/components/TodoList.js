@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { bindActionCreators } from 'redux'
+import { todoThunks } from '../store/thunks/todo'
 import { connect } from 'react-redux'
-import { actions } from '../store'
+import { actions as todoActions } from '../store/reducers/todo'
 
 import './TodoList.css'
 
@@ -9,6 +9,11 @@ class TodoList extends Component {
 
   state = {
     task: '',
+  }
+
+  componentDidMount() {
+    const { getAll } = this.props
+    getAll()
   }
 
   render() {
@@ -75,8 +80,9 @@ class TodoList extends Component {
 const mapStateToProps = (state) => ({ tasksArray: state.todoReducer.tasksArray})
 
 const mapDispatchToProps = (dispatch) => ({
-  add: bindActionCreators(actions.add, dispatch),
-  remove: bindActionCreators(actions.remove, dispatch)
+  add: taks => dispatch(todoActions.add(taks)),
+  remove: taks => dispatch(todoActions.remove(taks)),
+  getAll: () => dispatch(todoThunks.getAll())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
