@@ -9,11 +9,14 @@ class TodoList extends Component {
 
   state = {
     task: '',
+    tasksArray: []
   }
 
   componentDidMount() {
-    const { getAll } = this.props
-    getAll()
+    // const { getAll } = this.props
+    const { requestGetAll } = this.props
+    // getAll()
+    requestGetAll()
   }
 
   render() {
@@ -82,7 +85,8 @@ const mapStateToProps = (state) => ({ tasksArray: state.todoReducer.tasksArray})
 const mapDispatchToProps = (dispatch) => ({
   add: taks => dispatch(todoActions.add(taks)),
   remove: taks => dispatch(todoActions.remove(taks)),
-  getAll: () => dispatch(todoThunks.getAll())
+  getAll: () => dispatch(todoThunks.getAll()),
+  requestGetAll: () => dispatch(todoActions.requestGetAll())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
