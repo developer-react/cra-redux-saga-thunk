@@ -15,6 +15,10 @@ const actions = {
   getAll: tasks => ({
     payload: tasks,
     type: 'TODO_GET_ALL'
+  }),
+  requestGetAll: tasks => ({
+    payload: null,
+    type: 'TODO_REQUEST_GET_ALL'
   })
 }
 
